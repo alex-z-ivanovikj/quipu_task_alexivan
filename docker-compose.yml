@@ -1,0 +1,13 @@
+services:
+  parabank:
+    image: parasoft/parabank:latest
+    container_name: parabank
+    ports:
+      - "8080:8080"   # web app, REST and SOAP
+      - "61616:61616" # JMS broker (only for the JMS loan provider)
+      - "9001:9001"   # HSQLDB (only for direct database checks)
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8080/parabank/index.htm || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
